@@ -1,5 +1,6 @@
 import mongoose from "mongoose"
 import bcrypt from "bcrypt"
+import jwt from "jsonwebtoken"
 
 const userSchema = new mongoose.Schema({
     username: {
@@ -19,6 +20,7 @@ const userSchema = new mongoose.Schema({
     },
     image: {
         type: String,
+        default: "https://res.cloudinary.com/duj7aqdfc/image/upload/v1724661266/EpicRecipes/UserProfiles/DefaultImage.png"
     },
     password: {
         type: String,
@@ -36,6 +38,10 @@ const userSchema = new mongoose.Schema({
             ref: "Save"
         }
     ],
+    refreshToken: {
+        type: String
+    }
+    
 }, { timestamps: true })
 
 
@@ -56,5 +62,29 @@ userSchema.methods.isPasswordCorrect = async function (newPassword) {
     return await bcrypt.compare(newPassword, this.password)
 }
 
+// access and refresh tokens
+userSchema.methods.generateAccessToken = function () {
+    return jwt.sign({
+        _id: this._id,
+        name: this.name,
+        email: this.email
+    },
+        process.env.ACCESS_TOKEN_SECRET,
+        {
+            expiresIn: process.env.ACCESS_TOKEN_EXPIRY
+        }
+    )
+}
+
+userSchema.methods.generateRefreshToken = function () {
+    return jwt.sign({
+        _id: this._id,
+    },
+        process.env.REFRESH_TOKEN_SECRET,
+        {
+            expiresIn: process.env.REFRESH_TOKEN_EXPIRY
+        }
+    )
+}
 
 export const User = mongoose.model("User", userSchema)
