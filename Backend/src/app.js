@@ -28,10 +28,11 @@ app.get("/api/v1", (req, res) => {
 // routes import
 import userRouter from "./routes/user.route.js"
 import recipeRouter from "./routes/recipe.route.js"
+import recipeStatusRouter from "./routes/recipeStatus.route.js"
 
 // routes declaration
 app.use("/api/v1/users", userRouter)
 app.use("/api/v1/recipes", recipeRouter)
-
+app.use("/api/v1/recipesby", recipeStatusRouter)
 
 export default app

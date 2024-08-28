@@ -30,11 +30,15 @@ const recipeSchema = new mongoose.Schema({
         default: null,
     },
     category: {
-        type: String, 
+        type: String,
         default: "",
         lowercase: true,
     },
     isTrending: {
+        type: Boolean,
+        default: false
+    },
+    isTopRecipe: {
         type: Boolean,
         default: false
     },
