@@ -3,7 +3,7 @@ import { ApiResponse } from "../utils/ApiResponse.js"
 import { ApiError } from "../utils/ApiError.js"
 import { cookieOptions } from "../utils/myTools.js"
 import asyncHandler from "../utils/asyncHandler.js"
-import uploadOnCloudinary from "../utils/cloudinary.js"
+import uploadOnCloudinary, { getImageUrlsFromFolder } from "../utils/cloudinary.js"
 
 const generateAccessAndRefreshToken = async (userId) => {
     try {
@@ -144,7 +144,7 @@ const getUser = asyncHandler(async (req, res) => {
 
 const updateUser = asyncHandler(async (req, res) => {
 
-    const { username, email, oldPass, newPass } = req.body
+    const { username, email, oldPass, newPass, defaultImage } = req.body
 
     const user = await User.findById(req.user._id)
 
@@ -176,7 +176,10 @@ const updateUser = asyncHandler(async (req, res) => {
         user.password = newPass
     }
 
-    // if user wants to update profile image
+    // if user wants to update profile image 
+    // if user choose from default images
+    if (defaultImage) user.image = defaultImage
+    // if user provided his own image
     const localImagePath = req.file?.path
     if (localImagePath) {
         const imageUrl = await uploadOnCloudinary(localImagePath, "EpicRecipes/UserProfiles")
@@ -188,10 +191,33 @@ const updateUser = asyncHandler(async (req, res) => {
     }
 
     await user.save()
-    return res.status(200).json({ "message": "Done" })
+
+    return res.status(200)
+        .json(new ApiResponse(200, {}, "User details updated successfully"))
 
 })
 
+const getDefaultProfiles = asyncHandler(async (req, res) => {
 
-export { registerUser, loginUser, logoutUser, getUser, updateUser }
+    const folderPath = 'EpicRecipes/UserProfiles/DefaultProfile'; // Correct nested folder path
+
+    let defaultImages = await getImageUrlsFromFolder(folderPath)
+
+    if (!defaultImages) {
+        return res.status(501).json(new ApiError(501, "Failed to fetch default profile images"))
+    }
+
+    return res.status(200)
+        .json(new ApiResponse(200, defaultImages, "Default profile images fetched successfully"))
+
+})
+
+export {
+    registerUser,
+    loginUser,
+    logoutUser,
+    getUser,
+    updateUser,
+    getDefaultProfiles
+}
 

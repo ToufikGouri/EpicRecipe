@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
     },
     image: {
         type: String,
-        default: "https://res.cloudinary.com/duj7aqdfc/image/upload/v1724661266/EpicRecipes/UserProfiles/DefaultImage.png"
+        default: "https://res.cloudinary.com/duj7aqdfc/image/upload/v1724665397/EpicRecipes/UserProfiles/DefaultProfile/DefaultImage.png"
     },
     password: {
         type: String,
@@ -35,7 +35,7 @@ const userSchema = new mongoose.Schema({
     savedRecipes: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "Save"
+            ref: "Recipe"
         }
     ],
     refreshToken: {
