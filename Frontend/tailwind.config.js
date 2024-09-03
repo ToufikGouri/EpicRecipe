@@ -12,7 +12,7 @@ export default {
       },
       colors: {
         primaryBlue: "#004D84",
-        primaryRed: "#F4796C",
+        primaryRed: "#FF5E4D",
         primaryGrey: "#595959",
         secondaryGrey: "#D4D4D4",
       },

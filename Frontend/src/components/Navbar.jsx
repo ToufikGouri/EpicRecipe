@@ -15,7 +15,7 @@ const Navbar = () => {
           <img src={ER_Logo} className='w-28 sm:w-40' alt="EpicRecipes" />
         </Link>
 
-        <ul className='navItems-fs max-sm:hidden w-2/4 uppercase font-bold flex justify-around'>
+        <ul className='navItems-fs max-sm:hidden w-2/4 uppercase font-bold text-xl flex justify-around'>
           <li><NavLink to="/">Home</NavLink></li>
           <li><NavLink to="/recipes">Recipes</NavLink></li>
           <li><NavLink to="/category">By Category</NavLink></li>
@@ -41,7 +41,7 @@ const Navbar = () => {
         </button>
 
         {/* Nav for small screen */}
-        <ul className={`navItems-ss ${isMenuOpen ? "" : "hidden"} h-screen w-full uppercase font-bold text-xl border border-t-0 border-secondaryGrey`}>
+        <ul onClick={() => setIsMenuOpen(false)} className={`navItems-ss ${isMenuOpen ? "" : "hidden"} h-screen w-full uppercase font-bold text-xl border border-t-0 border-secondaryGrey`}>
           <li><NavLink to="/">Home</NavLink></li>
           <li><NavLink to="/recipes">Recipes</NavLink></li>
           <li><NavLink to="/category">By Category</NavLink></li>

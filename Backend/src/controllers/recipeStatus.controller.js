@@ -5,7 +5,12 @@ import asyncHandler from "../utils/asyncHandler.js";
 
 const getTrendingRecipes = asyncHandler(async (req, res) => {
 
+    const { page = 1, limit = 5 } = req.query
+    const skip = (page - 1) * limit
+
     const recipes = await Recipe.find({ isTrending: true })
+        .skip(parseInt(skip))
+        .limit(parseInt(limit))
 
     if (!recipes) {
         return res.status(500).json(new ApiError(500, "Failed to fetch trending recipes"))
@@ -18,7 +23,12 @@ const getTrendingRecipes = asyncHandler(async (req, res) => {
 
 const getTopRecipes = asyncHandler(async (req, res) => {
 
+    const { page = 1, limit = 10 } = req.query
+    const skip = (page - 1) * limit
+
     const recipes = await Recipe.find({ isTopRecipe: true })
+        .skip(parseInt(skip))
+        .limit(parseInt(limit))
 
     if (!recipes) {
         return res.status(500).json(new ApiError(500, "Failed to fetch trending recipes"))
@@ -32,7 +42,12 @@ const getTopRecipes = asyncHandler(async (req, res) => {
 const getAllCategories = asyncHandler(async (req, res) => {
     // Here is the example of handling error with the query which returns an Array
     try {
+        const { page = 1, limit = 10 } = req.query
+        const skip = (page - 1) * limit
+
         const categories = await Recipe.distinct("category")
+            .skip(parseInt(skip))
+            .limit(parseInt(limit))
 
         return res.status(200)
             .json(new ApiResponse(200, categories, "All categories fetched successfully"))

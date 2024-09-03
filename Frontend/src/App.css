@@ -4,18 +4,57 @@
     box-sizing: border-box;
 }
 
+body {
+    font-family: 'Inria Serif', serif;
+    background-color: #F5F5F5;
+}
+
+/* General css */
+.textShadow {
+    text-shadow: 0px 0px 50px black;
+}
+
+.primaryBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100px;
+    padding: 8px 20px;
+    color: white;
+    background-color: #FF5E4D;
+    text-transform: uppercase;
+    font-weight: bold;
+    transition: all ease-in 100ms;
+}
+
+.primaryBtn:hover {
+    background-color: #F4796C;
+
+    svg {
+        transition: all ease-in 100ms;
+        transform: translateX(5px);
+    }
+}
+
+/* --------------General css ends here-------------- */
+
+
+/* Navbar css */
 .navItems-fs a {
     min-width: 80px;
-    padding: 20px 0;
+    padding: 18px 0;
     text-align: center;
-    border-bottom: 2px solid transparent;
+    border-bottom: 3px solid transparent;
     transition: all ease-in-out 100ms;
 }
 
-.navItems-fs a:hover,
 .navItems-fs .active {
     color: #F4796C;
     border-color: #F4796C;
+}
+
+.navItems-fs a:hover {
+    color: #F4796C;
 }
 
 /* nav for smaller screen */
@@ -30,16 +69,30 @@
 }
 
 .navItems-ss li {
-    padding: 20px 10px;
     border-bottom: 1px solid #D4D4D4;
 }
 
+.navItems-ss a {
+    display: flex;
+    width: 100%;
+    padding: 20px 10px;
+}
+
+.navItems-ss .active {
+    color: #F4796C;
+}
+
+
 @keyframes navAnimation {
     0% {
-        height: 0px;    
+        height: 0px;
     }
 
     100% {
         height: 100vh;
     }
+}
+
+footer a:hover {
+    color: #F4796C;
 }
