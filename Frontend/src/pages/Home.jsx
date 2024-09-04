@@ -4,7 +4,7 @@ import MidImage from "../assets/HomeAssets/MidImage.png"
 import { ChevronRightIcon, HeartIcon } from "lucide-react"
 import RecipeCard from '../components/RecipeCard'
 import { useSelector, useDispatch } from "react-redux"
-import { getAllRecipes, getTrendingRecipes } from '../redux/recipeSlice'
+import { getHomeRecipes, getTrendingRecipes } from '../redux/recipeSlice'
 import TrendingSection from '../components/homeComponents/TrendingSection'
 import { Link } from 'react-router-dom'
 import TestimonialSection from '../components/homeComponents/TestimonialSection'
@@ -13,7 +13,7 @@ import Footer from '../components/Footer'
 const Home = () => {
 
   const trendingRecipesData = useSelector(state => state.recipe.trendingRecipes)
-  const allRecipesData = useSelector(state => state.recipe.allRecipes)
+  const homeRecipesData = useSelector(state => state.recipe.homeRecipes)
   const dispatch = useDispatch()
 
   const heroRecipeData = {
@@ -23,7 +23,7 @@ const Home = () => {
   }
 
   useEffect(() => {
-    dispatch(getAllRecipes())
+    dispatch(getHomeRecipes())
     dispatch(getTrendingRecipes())
   }, [])
 
@@ -31,6 +31,7 @@ const Home = () => {
   return (
     <>
       <main>
+        
         {/* Hero section*/}
         <section className={`h-screen w-full bg-no-repeat bg-cover bg-center text-white flex flex-col justify-end items-start p-2 sm:p-8 gap-10`} style={{ backgroundImage: `url(${heroRecipeData.image})` }}>
           <h1 className='text-6xl sm:text-7xl font-bold textShadow bg-black/10'>Quick recipes to <br /> get started with</h1>
@@ -67,7 +68,7 @@ const Home = () => {
         <section className='m-2 my-10 sm:mx-20'>
           <h1 className='text-primaryBlue text-2xl sm:text-4xl uppercase font-bold'>Find something tasty to make tonight</h1>
           <div className='my-4 grid grid-cols-1 md:grid-cols-4 gap-5'>
-            {allRecipesData && allRecipesData.map((val) =>
+            {homeRecipesData && homeRecipesData.map((val) =>
               <RecipeCard key={val._id} id={val._id} image={val.image} title={val.title} />
             )}
           </div>
