@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { addRecipe, deleteRecipe, getAllRecipes, getSingleRecipe, getUserRecipes, likeRecipe, saveRecipe, updateRecipe } from "../controllers/recipe.controller.js";
+import { addRecipe, deleteRecipe, getAllRecipes, getRandomRecipes, getSingleRecipe, getUserRecipes, likeRecipe, saveRecipe, updateRecipe } from "../controllers/recipe.controller.js";
 import { uploadUsingMulter } from "../middlewares/multer.middleware.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 
@@ -8,6 +8,8 @@ const router = Router()
 router.route("/recipe/:id").get(getSingleRecipe)
 
 router.route("/allrecipes").get(getAllRecipes)
+
+router.route("/randomrecipes/:num").get(getRandomRecipes)
 
 router.route("/userrecipe").get(getUserRecipes)
 

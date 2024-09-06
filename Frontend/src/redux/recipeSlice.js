@@ -96,8 +96,6 @@ export const recipeSlice = createSlice({
             .addCase(getTopRecipes.rejected, (state) => {
                 state.mainLoading = false
             })
-
-        // CATEGORY PAGE
         // case for all recipes
         builder
             .addCase(getAllRecipes.pending, (state) => {
@@ -111,6 +109,7 @@ export const recipeSlice = createSlice({
                 state.mainLoading = false
             })
 
+        // CATEGORY PAGE
         // case for categories
         builder
             .addCase(getAllCategories.pending, (state) => {

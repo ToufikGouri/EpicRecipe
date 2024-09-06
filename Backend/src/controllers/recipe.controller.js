@@ -45,6 +45,26 @@ const getAllRecipes = asyncHandler(async (req, res) => {
 
 })
 
+const getRandomRecipes = asyncHandler(async (req, res) => {
+
+    const { userId } = req.body
+    const { num = 8 } = req.params
+
+    const recipes = await Recipe.aggregate([
+        {
+            $sample: { size: parseInt(num) }
+        }
+    ])
+
+    if (!recipes) {
+        return res.status(500).json(new ApiError(500, "Failed to get random recipes"))
+    }
+
+    return res.status(200)
+        .json(new ApiResponse(200, recipes, "Random recipes fetched successfully"))
+
+})
+
 const getUserRecipes = asyncHandler(async (req, res) => {
 
     // we'll take userId from body instead of req.user because we won't use JWT middleware there since guest user can also get recipes
@@ -68,8 +88,8 @@ const getUserRecipes = asyncHandler(async (req, res) => {
 const addRecipe = asyncHandler(async (req, res) => {
 
     let { title, description, image, ingredients, directions, preparationTime, servings, category } = req.body
-    const owner = req.user 
-    
+    const owner = req.user
+
 
     // title, ingredients & directions are required fields & rest are optional
     if (!title || !ingredients || !directions) {
@@ -289,6 +309,7 @@ const saveRecipe = asyncHandler(async (req, res) => {
 export {
     getSingleRecipe,
     getAllRecipes,
+    getRandomRecipes,
     getUserRecipes,
     addRecipe,
     updateRecipe,
