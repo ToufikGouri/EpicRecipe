@@ -7,11 +7,10 @@ import Footer from '../components/Footer'
 
 const Recipes = () => {
 
-    const topRecData = useSelector(state => state.recipe.topRecipes)
+    const topRecipesData = useSelector(state => state.recipe.topRecipes)
     const allRecipesData = useSelector(state => state.recipe.allRecipes)
     const dispatch = useDispatch()
 
-    const [topRecipesData, setTopRecipesData] = useState(topRecData)
     const [page, setPage] = useState(1)
     const [limit, setLimit] = useState(8) 
     const [paginationArray, setPaginationArray] = useState([2, 3, 4])
@@ -43,7 +42,7 @@ const Recipes = () => {
 
                 {/* Hero section */}
                 <section>
-                    <div className={`mt-[63px] h-[50vh] w-full bg-no-repeat bg-cover bg-center flex flex-col justify-end items-start p-2 sm:p-8 gap-10`} style={{ backgroundImage: `url(${HeroImage})` }}></div>
+                    <div className={`mt-[63px] h-[50vh] w-full bg-no-repeat bg-cover bg-center`} style={{ backgroundImage: `url(${HeroImage})` }}></div>
                     <div className="m-2 my-10 sm:mx-20">
                         <h1 className='text-primaryBlue text-2xl sm:text-4xl uppercase font-bold'>All Recipes</h1>
                         <p className='mt-4 sm:text-xl'>Recipes for lovers of good food! From easy dinner recipes to cosy soups, slurp worthy pastas and Chinese takeout, we’re all about big flavours and recipes that always work!</p>
@@ -53,7 +52,7 @@ const Recipes = () => {
                 {/* Top recipes section */}
                 <section className='m-2 my-10 sm:mx-20'>
                     <h1 className='text-primaryBlue text-2xl sm:text-4xl uppercase font-bold text-center'>Explore Top Recipes</h1>
-                    <div className='my-8 grid grid-cols-1 md:grid-cols-3 gap-5'>
+                    <div className='my-8 grid grid-cols-1 md:grid-cols-3 gap-5 place-items-center'>
                         {topRecipesData && topRecipesData.map((val) =>
                             <RecipeCard key={val._id} id={val._id} image={val.image} title={val.title} category={val.category} />
                         )}

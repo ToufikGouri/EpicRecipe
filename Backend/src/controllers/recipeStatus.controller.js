@@ -42,10 +42,25 @@ const getTopRecipes = asyncHandler(async (req, res) => {
 const getAllCategories = asyncHandler(async (req, res) => {
     // Here is the example of handling error with the query which returns an Array
     try {
-        const { page = 1, limit = 10 } = req.query
+
+        const { page = 1, limit = 20 } = req.query
         const skip = (page - 1) * limit
 
-        const categories = await Recipe.distinct("category")
+        const categories = await Recipe.aggregate([
+            {
+                $group: {
+                    _id: "$category",           // Ensures the group should be created with category field
+                    image: { $first: "$image" } // Get the first image in the group
+                }
+            },
+            {
+                $project: {
+                    _id: 0,             // Exclude the internal _id field we created in $group
+                    category: "$_id",   // adding category field and assigning value to it 
+                    image: 1
+                }
+            }
+        ])
             .skip(parseInt(skip))
             .limit(parseInt(limit))
 

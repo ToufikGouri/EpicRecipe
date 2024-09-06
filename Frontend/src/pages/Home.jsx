@@ -67,7 +67,7 @@ const Home = () => {
         {/* Cards section */}
         <section className='m-2 my-10 sm:mx-20'>
           <h1 className='text-primaryBlue text-2xl sm:text-4xl uppercase font-bold'>Find something tasty to make tonight</h1>
-          <div className='my-4 grid grid-cols-1 md:grid-cols-4 gap-5'>
+          <div className='my-4 grid grid-cols-1 md:grid-cols-4 gap-5 place-items-center'>
             {homeRecipesData && homeRecipesData.map((val) =>
               <RecipeCard key={val._id} id={val._id} image={val.image} title={val.title} />
             )}
