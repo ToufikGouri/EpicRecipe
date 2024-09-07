@@ -12,10 +12,10 @@ import SingleRecipe from './pages/SingleRecipe'
 import Category from './pages/Category'
 import Signup from './pages/Signup'
 import Login from './pages/Login'
+import SingleCategory from './pages/SingleCategory'
 
 function App() {
 
-  const user = useSelector(state => state.user.userData)
   const isLoggedIn = useSelector(state => state.user.isLoggedIn)
   const dispatch = useDispatch()
 
@@ -31,8 +31,9 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path='/about' element={<About />} />
           <Route path='/recipes' element={<Recipes />} />
-          <Route path='/recipes/recipe/:id' element={<SingleRecipe />} />
+          <Route path='/recipes/:id' element={<SingleRecipe />} />
           <Route path='/category' element={<Category />} />
+          <Route path='/category/:category' element={<SingleCategory />} />
           <Route path='/signup' element={<Signup />} />
           <Route path='/login' element={<Login />} />
           <Route path='*' element={<NotFound />} />

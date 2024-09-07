@@ -39,6 +39,13 @@ export const getAllCategories = createAsyncThunk(
             .then((val) => val.data.data).catch(err => console.log(err))
     }
 )
+export const getRecipesByCategory = createAsyncThunk(
+    "recipes/getRecipesByCategory",
+    async ({ category, page = 1, limit = 8 }) => {
+        return await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/recipesby/category?category=${category}&page=${page}&limit=${limit}`, { withCredentials: true })
+            .then((val) => val.data.data).catch(err => console.log(err))
+    }
+)
 
 const initialState = {
     homeRecipes: null,
@@ -48,6 +55,7 @@ const initialState = {
     allRecipes: null,
 
     allCategories: null,
+    recipesByCategory: null,
     mainLoading: false
 }
 
@@ -120,6 +128,18 @@ export const recipeSlice = createSlice({
                 state.mainLoading = false
             })
             .addCase(getAllCategories.rejected, (state) => {
+                state.mainLoading = false
+            })
+        // case for recipes by category
+        builder
+            .addCase(getRecipesByCategory.pending, (state) => {
+                state.mainLoading = true
+            })
+            .addCase(getRecipesByCategory.fulfilled, (state, action) => {
+                state.recipesByCategory = action.payload
+                state.mainLoading = false
+            })
+            .addCase(getRecipesByCategory.rejected, (state) => {
                 state.mainLoading = false
             })
     }
