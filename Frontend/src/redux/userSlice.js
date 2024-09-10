@@ -2,15 +2,24 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 export const getUserData = createAsyncThunk(
-    "user/fetchUserData",
+    "user/getUserData",
     async () => {
         return await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/users`, { withCredentials: true })
             .then((res) => res.data.data)
     }
 )
 
+export const getDefaultProfiles = createAsyncThunk(
+    "user/getDefaultProfiles",
+    async () => {
+        return await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/users/defaultprofiles`, { withCredentials: true })
+            .then((val) => val.data.data)
+    }
+)
+
 const initialState = {
     userData: null,
+    defaultProfiles: null,
     isLoggedIn: false,
     loading: false
 }
@@ -40,6 +49,12 @@ const userSlice = createSlice({
             })
             .addCase(getUserData.rejected, (state) => {
                 state.loading = false
+            })
+
+        // Case for default profiles (not needed all cases)
+        builder
+            .addCase(getDefaultProfiles.fulfilled, (state, action) => {
+                state.defaultProfiles = action.payload
             })
     }
 })

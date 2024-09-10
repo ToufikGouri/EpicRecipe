@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux'
 const Navbar = () => {
 
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const isLoggedIn = useSelector(state => state.user.isLoggedIn)
+  const user = useSelector(state => state.user.userData)
 
   return (
     <>
@@ -33,8 +33,8 @@ const Navbar = () => {
           <SearchIcon className='absolute top-2/4 -translate-y-2/4 right-2' />
         </div>
 
-        <Link to={`${isLoggedIn ? "/account" : "/login"}`} className='max-md:hidden'>
-          <UserIcon className='size-7 hover:text-primaryRed' />
+        <Link to="/account" className='max-md:hidden'>
+          {user ? <img src={user.image} alt={user.username} className="size-7 rounded-full object-contain border border-primaryGrey" /> : <UserIcon className='size-7 hover:text-primaryRed' />}
         </Link>
 
         {/* Menu btn for small screen */}
@@ -49,7 +49,7 @@ const Navbar = () => {
           <li><NavLink to="/category">By Category</NavLink></li>
           <li><NavLink to="/account/addrecipe">Add Recipe</NavLink></li>
           <li><NavLink to="/about">About</NavLink></li>
-          <li><NavLink to={`${isLoggedIn ? "/account" : "/login"}`}>Profile</NavLink></li>
+          <li><NavLink to="/account">Profile</NavLink></li>
         </ul>
       </nav>
     </>

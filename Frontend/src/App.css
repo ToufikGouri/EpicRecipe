@@ -97,3 +97,13 @@ body {
 footer a:hover {
     color: #F4796C;
 }
+
+.sidebar ul li {
+    display: flex;
+    border-top: 2px solid #D4D4D4;
+}
+
+.sidebar ul li a {
+    width: 100%;
+    padding: 10px 20px;
+}

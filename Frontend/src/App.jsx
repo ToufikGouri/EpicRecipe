@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import './App.css'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
-import { getUserData } from './redux/userSlice'
+import { getDefaultProfiles, getUserData } from './redux/userSlice'
 import Navbar from "./components/Navbar"
 import Home from './pages/Home'
 import About from './pages/About'
@@ -13,6 +13,9 @@ import Category from './pages/Category'
 import Signup from './pages/Signup'
 import Login from './pages/Login'
 import SingleCategory from './pages/SingleCategory'
+import Account from './pages/account/Account'
+import Profile from './pages/account/Profile'
+import PrivateRoutes from './components/PrivateRoutes'
 
 function App() {
 
@@ -21,6 +24,7 @@ function App() {
 
   useEffect(() => {
     dispatch(getUserData())
+    dispatch(getDefaultProfiles())
   }, [isLoggedIn])
 
   return (
@@ -37,6 +41,12 @@ function App() {
           <Route path='/signup' element={<Signup />} />
           <Route path='/login' element={<Login />} />
           <Route path='*' element={<NotFound />} />
+          <Route element={<PrivateRoutes />}>
+            <Route path='/account' element={<Account />}>
+              <Route index element={<Profile />} /> {/* Index is used to specify default child sub route but path need to be specified explicitely */}
+              <Route path='profile' element={<Profile />} />
+            </Route>
+          </Route>
         </Routes>
       </Router>
     </>
