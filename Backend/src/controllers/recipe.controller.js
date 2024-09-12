@@ -87,7 +87,7 @@ const getUserRecipes = asyncHandler(async (req, res) => {
 
 const addRecipe = asyncHandler(async (req, res) => {
 
-    let { title, description, image, ingredients, directions, preparationTime, servings, category } = req.body
+    let { title, description, ingredients, directions, preparationTime, servings, category } = req.body
     const owner = req.user
 
 
@@ -103,16 +103,16 @@ const addRecipe = asyncHandler(async (req, res) => {
 
 
     // if image is provided
-    // const localImagePath = req.file?.path
-    // let image;
-    // if (localImagePath) {
-    //     const imageUrl = await uploadOnCloudinary(localImagePath, "EpicRecipes/Recipes")
+    const localImagePath = req.file?.path
+    let image;
+    if (localImagePath) {
+        const imageUrl = await uploadOnCloudinary(localImagePath, "EpicRecipes/Recipes")
 
-    //     if (!imageUrl) {
-    //         return res.status(500).json(new ApiError(500, "Failed to upload image"))
-    //     }
-    //     image = imageUrl
-    // }
+        if (!imageUrl) {
+            return res.status(500).json(new ApiError(500, "Failed to upload image"))
+        }
+        image = imageUrl
+    }
 
     // creating recipe
     const recipe = await Recipe.create({

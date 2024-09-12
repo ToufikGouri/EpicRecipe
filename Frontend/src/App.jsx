@@ -17,6 +17,7 @@ import Account from './pages/account/Account'
 import Profile from './pages/account/Profile'
 import PrivateRoutes from './components/PrivateRoutes'
 import ChangePassword from './pages/account/ChangePassword' 
+import AddRecipe from './pages/account/AddRecipe'
 
 function App() {
 
@@ -47,6 +48,7 @@ function App() {
               <Route index element={<Profile />} /> {/* Index is used to specify default child sub route but path need to be specified explicitely */}
               <Route path='profile' element={<Profile />} />
               <Route path='changepassword' element={<ChangePassword />} />
+              <Route path='addrecipe' element={<AddRecipe />} />
             </Route>
           </Route>
         </Routes>

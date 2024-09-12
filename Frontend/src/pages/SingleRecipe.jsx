@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import RecipeImagePlaceholder from "../assets/RecipeAdd Placeholder.png"
+import RecipeImagePlaceholder from "../assets/AddRecipe.png"
 import { useParams } from 'react-router-dom'
 import { HeartIcon } from 'lucide-react'
 import moment from "moment"
