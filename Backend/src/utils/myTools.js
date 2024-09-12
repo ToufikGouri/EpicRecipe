@@ -7,9 +7,9 @@ export const cookieOptions = {
 }
 
 // adding isLiked status to each recipe
-export const recipeWithLikeStatus = (recipes, userId) => {    
+export const recipeWithLikeStatus = (recipes, userId) => {
     return recipes.map(recipe => {
-        const isLiked = recipe.likes.includes(userId)  
+        const isLiked = recipe.likes.includes(userId)
         return {
             ...recipe._doc,
             isLiked

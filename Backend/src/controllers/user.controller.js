@@ -1,4 +1,4 @@
-import { User } from "../models/User.model.js";
+import { OTP, User } from "../models/User.model.js";
 import { ApiResponse } from "../utils/ApiResponse.js"
 import { ApiError } from "../utils/ApiError.js"
 import { cookieOptions } from "../utils/myTools.js"
@@ -212,12 +212,59 @@ const getDefaultProfiles = asyncHandler(async (req, res) => {
 
 })
 
+// OTP Schema methods
+const sendOTP = asyncHandler(async (req, res) => {
+
+    // generate 6-digit otp
+    const tempOTP = Math.floor(Math.random() * 900000) + 100000
+
+    // creating otp 
+    const otp = await OTP.create({
+        owner: req.user._id,
+        tempOTP
+    })
+
+    if (!otp) {
+        return res.status(500).json(new ApiError(500, "Failed to generate OTP"))
+    }
+
+    return res.status(200)
+        .json(new ApiResponse(200, { otp }, "OTP generated successfully"))
+
+})
+
+const verifyOTP = asyncHandler(async (req, res) => {
+
+    const { tempOTP } = req.body
+    console.log(tempOTP, typeof tempOTP);
+
+    // checking if OTP exists
+    const response = await OTP.findOne({
+        tempOTP,
+        owner: req.user._id
+    })
+
+    if (!response) {
+        return res.status(400).json(new ApiError(400, "OTP verification failed"))
+    }
+
+    // delete the OTP after successful verification
+    await OTP.findByIdAndDelete(response._id);
+
+    return res.status(200)
+        .json(new ApiResponse(200, {}, "OTP verified successfully"))
+
+})
+
 export {
     registerUser,
     loginUser,
     logoutUser,
     getUser,
     updateUser,
-    getDefaultProfiles
+    getDefaultProfiles,
+
+    sendOTP,
+    verifyOTP
 }
 

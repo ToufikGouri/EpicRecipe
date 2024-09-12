@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getDefaultProfiles, getUser, loginUser, logoutUser, registerUser, updateUser } from "../controllers/user.controller.js";
+import { getDefaultProfiles, getUser, loginUser, logoutUser, registerUser, sendOTP, updateUser, verifyOTP } from "../controllers/user.controller.js";
 import { uploadUsingMulter } from "../middlewares/multer.middleware.js"
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 
@@ -17,5 +17,9 @@ router.route("/").get(verifyJWT, getUser)
 router.route("/logout").post(verifyJWT, logoutUser)
 
 router.route("/updateprofile").patch(verifyJWT, uploadUsingMulter.single("image"), updateUser)
+
+router.route("/send-otp").post(verifyJWT, sendOTP)
+
+router.route("/verifyotp").post(verifyJWT, verifyOTP)
 
 export default router

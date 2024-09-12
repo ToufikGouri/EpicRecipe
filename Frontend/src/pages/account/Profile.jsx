@@ -23,16 +23,14 @@ const Profile = () => {
     if (!updateUsername) {
       toast.fire({
         icon: "warning",
-        title: "All field are required"
+        title: "Please enter valid username"
       })
       return
     }
 
-    Loading("Updating Username")
     try {
       await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/api/v1/users/updateprofile`, { username: updateUsername }, { withCredentials: true })
 
-      Loading().close()
       toast.fire({
         icon: "success",
         title: "Username updated successfully"
@@ -41,7 +39,6 @@ const Profile = () => {
       dispatch(getUserData())
 
     } catch (error) {
-      Loading().close()
       toast.fire({
         icon: "error",
         title: `${error.response?.data?.message || "Failed To Update Username"}`
@@ -171,9 +168,9 @@ const Profile = () => {
             </div>
             {/* Update username */}
             <div>
-              <h1 className='font-bold text-xl'>Username</h1>
+              <label htmlFor='updateUsername' className='font-bold text-xl'>Username</label>
               <form onSubmit={handleUsername} className='update-username flex'>
-                <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} required minLength={5} className='p-2 w-full outline-primaryBlue border-2 border-black' placeholder='@username' />
+                <input id='updateUsername' type="text" value={username} onChange={(e) => setUsername(e.target.value)} required minLength={5} className='p-2 w-full outline-primaryBlue border-2 border-black' placeholder='@username' />
                 {user?.username !== username &&
                   <>
                     <button type="submit" className='w-24 mx-1 primaryBtn rounded-none'>Save</button>

@@ -1,5 +1,6 @@
 import LoadingGif from "./assets/Loading.gif"
 import SweetAlert from "sweetalert2"
+import emailjs from "emailjs-com"
 
 export const toast = SweetAlert.mixin({
     toast: true,
@@ -25,4 +26,24 @@ export const Loading = (msg = "Loading") => {
         width: 'auto',
         timer: 8000,
     })
+}
+
+export const sendOTPemail = async (username, otp, email) => {
+
+    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID
+    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+
+    const emailData = {
+        to_name: `${username}`,
+        otp: `${otp}`,
+        mail_to: `${email}`
+    }
+
+    try {
+        await emailjs.send(serviceId, templateId, emailData, publicKey)
+        return true
+    } catch (error) {
+        return false
+    }
 }

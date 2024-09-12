@@ -16,6 +16,7 @@ import SingleCategory from './pages/SingleCategory'
 import Account from './pages/account/Account'
 import Profile from './pages/account/Profile'
 import PrivateRoutes from './components/PrivateRoutes'
+import ChangePassword from './pages/account/ChangePassword' 
 
 function App() {
 
@@ -45,6 +46,7 @@ function App() {
             <Route path='/account' element={<Account />}>
               <Route index element={<Profile />} /> {/* Index is used to specify default child sub route but path need to be specified explicitely */}
               <Route path='profile' element={<Profile />} />
+              <Route path='changepassword' element={<ChangePassword />} />
             </Route>
           </Route>
         </Routes>

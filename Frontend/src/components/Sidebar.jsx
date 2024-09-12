@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom"
 const Sidebar = ({ username, image }) => {
   return (
     <>
-      <main className='sidebar col-span-1 bg-white shadow-xl'>
+      <main className='sidebar h-[425px] stickys top-16 col-span-1 bg-white shadow-xl'>
 
         {/* User data */}
         <div className='m-6 flex justify-center items-center font-bold text-xl'>
@@ -15,7 +15,7 @@ const Sidebar = ({ username, image }) => {
         <ul className='text-lg'>
           <li><NavLink to={"/account/profile"}>Personal Info</NavLink></li>
           <li><NavLink to={"/account/changepassword"}>Change Password</NavLink></li>
-          <li><NavLink to={"/account/some"}>Add Recipe</NavLink></li>
+          <li><NavLink to={"/account/addrecipe"}>Add Recipe</NavLink></li>
           <li><NavLink to={"/account/some"}>My Recipes</NavLink></li>
           <li><NavLink to={"/account/some"}>Saved Recipes</NavLink></li>
           <li><button className='w-full text-start py-[10px] p-5 text-white bg-primaryRed hover:bg-secondaryRed'>Log out</button></li>

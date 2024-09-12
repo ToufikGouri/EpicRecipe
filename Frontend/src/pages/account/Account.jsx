@@ -9,9 +9,9 @@ const Account = () => {
 
     return (
         <>
-            <main className="h-screen grid place-items-center max-md:mx-2">
+            <section className="flex justify-center max-md:mx-2">
 
-                <section className="grid grid-cols-1 md:grid-cols-3 gap-10 md:w-3/4 md:me-20">
+                <section className="mt-32 grid grid-cols-1 md:grid-cols-3 gap-10 md:w-3/4 md:me-20">
                     <Sidebar username={user?.username} image={user?.image} />
 
                     <section className="md:col-span-2 bg-white shadow-xl">
@@ -19,7 +19,7 @@ const Account = () => {
                     </section>
 
                 </section>
-            </main>
+            </section>
         </>
     )
 }

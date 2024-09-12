@@ -41,7 +41,7 @@ const userSchema = new mongoose.Schema({
     refreshToken: {
         type: String
     }
-    
+
 }, { timestamps: true })
 
 
@@ -88,3 +88,26 @@ userSchema.methods.generateRefreshToken = function () {
 }
 
 export const User = mongoose.model("User", userSchema)
+
+
+// OTP Schema
+const otpSchema = new mongoose.Schema({
+
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    },
+    tempOTP: {
+        type: Number,
+    },
+    expiresAt: {
+        type: Date,
+        default: () => Date.now() + 5 * 60 * 1000 // 5 minutes from now
+    }
+
+}, { timestamps: true })
+
+// Create TTL (Time-To-Live) index on the expiresAt field
+otpSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 });
+
+export const OTP = mongoose.model("OTP", otpSchema)
