@@ -16,8 +16,9 @@ import SingleCategory from './pages/SingleCategory'
 import Account from './pages/account/Account'
 import Profile from './pages/account/Profile'
 import PrivateRoutes from './components/PrivateRoutes'
-import ChangePassword from './pages/account/ChangePassword' 
+import ChangePassword from './pages/account/ChangePassword'
 import AddRecipe from './pages/account/AddRecipe'
+import MyRecipes from './pages/account/MyRecipes'
 
 function App() {
 
@@ -49,6 +50,8 @@ function App() {
               <Route path='profile' element={<Profile />} />
               <Route path='changepassword' element={<ChangePassword />} />
               <Route path='addrecipe' element={<AddRecipe />} />
+              <Route path='updaterecipe' element={<AddRecipe isUpdatePage={true} />} />
+              <Route path='myrecipes' element={<MyRecipes />} />
             </Route>
           </Route>
         </Routes>

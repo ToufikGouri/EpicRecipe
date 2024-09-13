@@ -16,8 +16,8 @@ const Sidebar = ({ username, image }) => {
           <li><NavLink to={"/account/profile"}>Personal Info</NavLink></li>
           <li><NavLink to={"/account/changepassword"}>Change Password</NavLink></li>
           <li><NavLink to={"/account/addrecipe"}>Add Recipe</NavLink></li>
-          <li><NavLink to={"/account/some"}>My Recipes</NavLink></li>
-          <li><NavLink to={"/account/some"}>Saved Recipes</NavLink></li>
+          <li><NavLink to={"/account/myrecipes"}>My Recipes</NavLink></li>
+          <li><NavLink to={"/account/savedrecipes"}>Saved Recipes</NavLink></li>
           <li><button className='w-full text-start py-[10px] p-5 text-white bg-primaryRed hover:bg-secondaryRed'>Log out</button></li>
         </ul>
 

@@ -45,7 +45,7 @@ const SingleCategory = () => {
 
                 {/* Hero section */}
                 <section>
-                    <div className={`mt-[63px] h-[50vh] w-full bg-no-repeat bg-cover bg-center`} style={{ backgroundImage: `url(${recipesByCategoryData[0]?.image || HeroImage})` }}></div>
+                    <div className={`mt-[63px] h-[50vh] w-full bg-no-repeat bg-cover bg-center`} style={{ backgroundImage: `url(${recipesByCategoryData && recipesByCategoryData[0].image || HeroImage})` }}></div>
                     <div id='recipesByCategory' className="m-2 pt-[63px] sm:mx-20">
                         <h1 className='text-primaryBlue text-2xl sm:text-4xl capitalize font-bold'>For The Love Of {category}</h1>
                         <p className='mt-4 sm:text-xl'>Recipes related to the {category}! Choose your favorite one and have a great meal tonight!</p>

@@ -47,7 +47,6 @@ const getAllRecipes = asyncHandler(async (req, res) => {
 
 const getRandomRecipes = asyncHandler(async (req, res) => {
 
-    const { userId } = req.body
     const { num = 8 } = req.params
 
     const recipes = await Recipe.aggregate([
@@ -68,20 +67,21 @@ const getRandomRecipes = asyncHandler(async (req, res) => {
 const getUserRecipes = asyncHandler(async (req, res) => {
 
     // we'll take userId from body instead of req.user because we won't use JWT middleware there since guest user can also get recipes
-    const { userId } = req.body
+    let { username } = req.params
     let { page = 1, limit = 10 } = req.query
-    const skip = (page - 1) * limit
+    const skip = (page - 1) * limit 
 
-    const recipes = await Recipe.find({ "owner._id": userId })
+
+    const recipes = await Recipe.find({ "owner.username": username })
+        .skip(parseInt(skip))
+        .limit(parseInt(limit))
 
     if (!recipes) {
         return res.status(500).json(new ApiError(500, "Failed to get user recipes"))
     }
 
-    const updatedRecipes = recipeWithLikeStatus(recipes, userId)
-
     return res.status(200)
-        .json(new ApiResponse(200, updatedRecipes, "User recipes fetched successfully"))
+        .json(new ApiResponse(200, recipes, "User recipes fetched successfully"))
 
 })
 

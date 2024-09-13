@@ -1,10 +1,15 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import defaultRecipeImage from "../../assets/AddRecipe.png"
 import { Loading, modal, toast } from '../../myTools'
 import { PlusIcon, XCircleIcon } from 'lucide-react'
 import axios from 'axios'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
-const AddRecipe = () => {
+const AddRecipe = ({ isUpdatePage = false }) => {
+
+    const recipeToUpdate = useSelector(state => state.user.recipeToUpdate)
+    const navigate = useNavigate()
 
     const [title, setTitle] = useState("")
     const [desc, setDesc] = useState("")
@@ -45,7 +50,6 @@ const AddRecipe = () => {
         if (servings) formData.append("servings", servings)
         if (category) formData.append("category", category)
 
-
         Loading("Adding Recipe")
         try {
             await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/v1/recipes/addrecipe`, formData, {
@@ -68,12 +72,50 @@ const AddRecipe = () => {
                 icon: "error",
                 title: `${error.response?.data?.message || "Failed To add recipe"}`
             })
-            console.log(error);
-
         }
+    }
 
+    const handleUpdateRecipe = async (e) => {
 
+        if (!title) { toast.fire({ icon: "warning", title: "Please enter title" }); return }
+        if (!ingredients[0]) { toast.fire({ icon: "warning", title: "Please enter ingredients" }); return }
+        if (!directions[0]) { toast.fire({ icon: "warning", title: "Please enter directions" }); return }
 
+        const formData = new FormData()
+
+        formData.append("recipeId", recipeToUpdate._id)
+        formData.append("title", title.trim())
+        formData.append("ingredients", JSON.stringify(ingredients))
+        formData.append("directions", JSON.stringify(directions))
+        if (desc) formData.append("description", desc.trim())
+        if (image) formData.append("image", image)
+        if (prepTime) formData.append("preparationTime", prepTime)
+        if (servings) formData.append("servings", servings)
+        if (category) formData.append("category", category)
+
+        Loading("Updating Recipe")
+        try {
+            await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/api/v1/recipes/updaterecipe`, formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data"
+                },
+                withCredentials: true
+            })
+
+            Loading().close()
+            toast.fire({
+                icon: "success",
+                title: "Recipe updated successfully"
+            })
+
+            navigate("/account/myrecipes")
+        } catch (error) {
+            Loading().close()
+            toast.fire({
+                icon: "error",
+                title: `${error.response?.data?.message || "Failed To update recipe"}`
+            })
+        }
     }
 
     const handleRecipeImage = (e) => {
@@ -90,6 +132,22 @@ const AddRecipe = () => {
         setImagePreview(imageUrl)
     }
 
+    useEffect(() => {
+
+        if (isUpdatePage) {
+            setTitle(recipeToUpdate.title)
+            setDesc(recipeToUpdate.description)
+            setImage(recipeToUpdate.image)
+            setImagePreview(recipeToUpdate.image || defaultRecipeImage)
+            setIngredients(recipeToUpdate.ingredients)
+            setDirections(recipeToUpdate.directions)
+            setCategory(recipeToUpdate.category)
+            setServings(recipeToUpdate.servings)
+            setPrepTime(recipeToUpdate.preparationTime)
+        }
+
+    }, [])
+
 
     return (
         <>
@@ -97,7 +155,7 @@ const AddRecipe = () => {
 
                 {/* Headings */}
                 <div className="headings">
-                    <h1 className='text-primaryBlue text-2xl sm:text-4xl font-bold'>Add a Recipe</h1>
+                    <h1 className='text-primaryBlue text-2xl sm:text-4xl font-bold'>{!isUpdatePage ? "Add a Recipe" : "Update your Recipe"}</h1>
                     <p className='sm:text-xl mt-3 my-1'>Uploading personal recipes is easy! Add yours to your favorites, share with friends, family, or the EpicRecipes community.</p>
                 </div>
 
@@ -219,8 +277,17 @@ const AddRecipe = () => {
                     <div className="Divider border border-secondaryGrey"></div>
 
                     <div className="finatBtn flex justify-end">
-                        <button onClick={() => modal("Cancel adding recipe?", "Confirm", "Cancel", "red").then(val => val.isConfirmed && handleResetFields())} className='p-2 px-5 uppercase border-2 border-black hover:bg-gray-200'>Cancel</button>
-                        <button onClick={handleSubmitRecipe} className='w-44 mx-1 primaryBtn rounded-none'>Submit Recipe</button>
+                        {
+                            !isUpdatePage ?
+                                <>
+                                    <button onClick={() => modal("Cancel adding recipe?", "Confirm", "Cancel", "red").then(val => val.isConfirmed && handleResetFields())} className='p-2 px-5 uppercase border-2 border-black hover:bg-gray-200'>Cancel</button>
+                                    <button onClick={handleSubmitRecipe} className='w-44 mx-1 primaryBtn rounded-none'>Submit Recipe</button>
+                                </>
+                                : <>
+                                    <button onClick={() => modal("Cancel updating recipe?", "Confirm", "Cancel", "red").then(val => val.isConfirmed && navigate("/account/myrecipes"))} className='p-2 px-5 uppercase border-2 border-black hover:bg-gray-200'>Cancel</button>
+                                    <button onClick={handleUpdateRecipe} className='w-44 mx-1 primaryBtn rounded-none'>Update Recipe</button>
+                                </>
+                        }
                     </div>
 
                 </div>

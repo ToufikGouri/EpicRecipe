@@ -11,7 +11,7 @@ router.route("/allrecipes").get(getAllRecipes)
 
 router.route("/randomrecipes/:num").get(getRandomRecipes)
 
-router.route("/userrecipe").get(getUserRecipes)
+router.route("/userrecipe/:username").get(getUserRecipes)
 
 // protected routes
 

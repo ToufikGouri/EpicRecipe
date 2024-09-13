@@ -17,11 +17,23 @@ export const getDefaultProfiles = createAsyncThunk(
     }
 )
 
+export const getUserRecipes = createAsyncThunk(
+    "user/getUserRecipes",
+    async (username) => {
+        return await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/recipes/userrecipe/${username}`, { withCredentials: true })
+            .then((res) => res.data.data)
+    }
+)
+
 const initialState = {
     userData: null,
     defaultProfiles: null,
+    userRecipes: null,
+    userSavedRecipes: null,
+    recipeToUpdate: null,
     isLoggedIn: false,
-    loading: false
+    loading: false,
+    reloadPage: false
 }
 
 const userSlice = createSlice({
@@ -33,11 +45,17 @@ const userSlice = createSlice({
         },
         setUserdata: (state, action) => {
             state.userData = action.payload
+        },
+        setReloadPage: (state, action) => {
+            state.reloadPage = action.payload
+        },
+        setRecipeToUpdate: (state, action) => {
+            state.recipeToUpdate = action.payload
         }
     },
     extraReducers: (builder) => {
 
-        // Case for user
+        // Case for user data
         builder
             .addCase(getUserData.pending, (state) => {
                 state.loading = true
@@ -56,9 +74,23 @@ const userSlice = createSlice({
             .addCase(getDefaultProfiles.fulfilled, (state, action) => {
                 state.defaultProfiles = action.payload
             })
+
+        // Case for user recipes 
+        builder
+            .addCase(getUserRecipes.pending, (state) => {
+                state.loading = true
+            })
+            .addCase(getUserRecipes.fulfilled, (state, action) => {
+                state.userRecipes = action.payload
+                state.loading = false
+            })
+            .addCase(getUserRecipes.rejected, (state) => {
+                state.loading = false
+            })
+
     }
 })
 
-export const { setUserLog, setUserdata } = userSlice.actions
+export const { setUserLog, setUserdata, setReloadPage, setRecipeToUpdate } = userSlice.actions
 
 export default userSlice.reducer
