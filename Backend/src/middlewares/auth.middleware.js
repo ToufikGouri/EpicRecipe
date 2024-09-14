@@ -30,3 +30,32 @@ export const verifyJWT = asyncHandler(async (req, res, next) => {
     }
 
 })
+
+export const optionalJWT = asyncHandler(async (req, res, next) => {
+    try {
+        const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ", "")
+
+        if (token) {
+
+            // decoding the token through jwt
+            const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
+
+            // getting the user details via decoded token's id 
+            const user = await User.findById(decodedToken?._id).select("-password -refreshToken")
+
+            if (user) {
+                // adding the user in req now
+                req.user = user
+            } else {
+                return res.status(401).json(new ApiError(401, "Invalid Access Token"))
+            }
+        }
+
+        // If no token, proceed as guest (no user in the request)
+        next()
+
+    } catch (error) {
+        // Continue without user (guest access)
+        next();
+    }
+})

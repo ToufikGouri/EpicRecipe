@@ -19,8 +19,16 @@ export const getDefaultProfiles = createAsyncThunk(
 
 export const getUserRecipes = createAsyncThunk(
     "user/getUserRecipes",
-    async (username) => {
-        return await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/recipes/userrecipe/${username}`, { withCredentials: true })
+    async ({ username, page = 1, limit = 10 }) => {
+        return await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/recipes/userrecipe/${username}?page=${page}&limit=${limit}`, { withCredentials: true })
+            .then((res) => res.data.data)
+    }
+)
+
+export const getSavedRecipes = createAsyncThunk(
+    "user/getSavedRecipes",
+    async ({ page = 1, limit = 10 }) => {
+        return await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/recipes/savedrecipes?page=${page}&limit=${limit}`, { withCredentials: true })
             .then((res) => res.data.data)
     }
 )
@@ -29,7 +37,7 @@ const initialState = {
     userData: null,
     defaultProfiles: null,
     userRecipes: null,
-    userSavedRecipes: null,
+    savedRecipes: null,
     recipeToUpdate: null,
     isLoggedIn: false,
     loading: false,
@@ -85,6 +93,19 @@ const userSlice = createSlice({
                 state.loading = false
             })
             .addCase(getUserRecipes.rejected, (state) => {
+                state.loading = false
+            })
+
+        // Case for saved recipes 
+        builder
+            .addCase(getSavedRecipes.pending, (state) => {
+                state.loading = true
+            })
+            .addCase(getSavedRecipes.fulfilled, (state, action) => {
+                state.savedRecipes = action.payload
+                state.loading = false
+            })
+            .addCase(getSavedRecipes.rejected, (state) => {
                 state.loading = false
             })
 

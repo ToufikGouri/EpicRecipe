@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getUserRecipes, setReloadPage } from '../../redux/userSlice'
+import { getSavedRecipes, setReloadPage } from '../../redux/userSlice'
 import ProfileRecipeCard from '../../components/ProfileRecipeCard'
 
-const MyRecipes = () => {
+const SavedRecipes = () => {
 
     const user = useSelector(state => state.user.userData)
-    const userRecipes = useSelector(state => state.user.userRecipes)
+    const savedRecipes = useSelector(state => state.user.savedRecipes)
     const reloadPage = useSelector(state => state.user.reloadPage)
     const dispatch = useDispatch()
 
@@ -15,7 +15,7 @@ const MyRecipes = () => {
     const [paginationArray, setPaginationArray] = useState([2, 3, 4])
 
     const handlePagination = (val) => {
-        if (val > page && userRecipes?.length < limit) return;    // for last page
+        if (val > page && savedRecipes?.length < limit) return;    // for last page
 
         if (val <= 3 && page > 3) {
             setPaginationArray([2, 3, 4])
@@ -29,7 +29,7 @@ const MyRecipes = () => {
     }
 
     useEffect(() => {
-        dispatch(getUserRecipes({ username: user?.username, page, limit }))
+        dispatch(getSavedRecipes({ page, limit }))
         dispatch(setReloadPage(false))      // will reload page when dispatch(setReloadPage(true))
     }, [user, reloadPage, page])
 
@@ -40,19 +40,19 @@ const MyRecipes = () => {
 
                 {/* Headings */}
                 <div className="headings">
-                    <h1 className='text-primaryBlue text-2xl sm:text-4xl font-bold'>Recipes made by me</h1>
-                    <p className='sm:text-xl mt-3 my-1'>Recipes made by you will be shown up here, keep going!</p>
+                    <h1 className='text-primaryBlue text-2xl sm:text-4xl font-bold'>Saved Recipes</h1>
+                    <p className='sm:text-xl mt-3 my-1'>All your saved recipes will be shown here, save the recipes you like so you would never lose them.</p>
                 </div>
 
                 {/* Cards */}
                 <div className='my-8 grid grid-cols-1 md:grid-cols-3 gap-5'>
-                    {userRecipes && userRecipes.map((val) =>
-                        <ProfileRecipeCard key={val._id} recipeData={val} />
+                    {savedRecipes && savedRecipes.map((val) =>
+                        <ProfileRecipeCard key={val._id} recipeData={val} savedCard />
                     )}
                 </div>
 
                 {/* Pagination */}
-                <h1 className={`my-8 text-primaryBlue text-xl sm:text-2xl font-bold flex justify-center ${userRecipes?.length < limit ? "block" : "hidden"}`}>
+                <h1 className={`my-8 text-primaryBlue text-xl sm:text-2xl font-bold flex justify-center ${savedRecipes?.length < limit ? "block" : "hidden"}`}>
                     End Of Recipes <button onClick={() => handlePagination(1)} className="ms-2 text-base rounded-full px-4 text-white bg-primaryRed hover:bg-secondaryRed">Back to first page</button>
                 </h1>
                 <div className='flex justify-center space-x-2'>
@@ -68,9 +68,10 @@ const MyRecipes = () => {
                     <p className={`size-8 grid place-items-center rounded-full bg-primaryRed text-white`}>...</p>
                     <button onClick={() => handlePagination(page + 1)} className={`size-8 grid place-items-center rounded-full bg-primaryRed hover:bg-secondaryRed text-white w-16`}>Next</button>
                 </div>
+
             </section>
         </>
     )
 }
 
-export default MyRecipes
+export default SavedRecipes

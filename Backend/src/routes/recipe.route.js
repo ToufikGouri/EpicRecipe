@@ -1,11 +1,11 @@
 import { Router } from "express";
-import { addRecipe, deleteRecipe, getAllRecipes, getRandomRecipes, getSingleRecipe, getUserRecipes, likeRecipe, saveRecipe, updateRecipe } from "../controllers/recipe.controller.js";
+import { addRecipe, deleteRecipe, getAllRecipes, getRandomRecipes, getSavedRecipes, getSingleRecipe, getUserRecipes, likeRecipe, saveRecipe, updateRecipe } from "../controllers/recipe.controller.js";
 import { uploadUsingMulter } from "../middlewares/multer.middleware.js";
-import { verifyJWT } from "../middlewares/auth.middleware.js";
+import { optionalJWT, verifyJWT } from "../middlewares/auth.middleware.js";
 
 const router = Router()
 
-router.route("/recipe/:id").get(getSingleRecipe)
+router.route("/recipe/:id").get(optionalJWT, getSingleRecipe)
 
 router.route("/allrecipes").get(getAllRecipes)
 
@@ -14,6 +14,8 @@ router.route("/randomrecipes/:num").get(getRandomRecipes)
 router.route("/userrecipe/:username").get(getUserRecipes)
 
 // protected routes
+
+router.route("/savedrecipes").get(verifyJWT, getSavedRecipes)
 
 router.route("/addrecipe").post(verifyJWT, uploadUsingMulter.single("image"), addRecipe)
 

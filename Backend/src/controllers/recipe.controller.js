@@ -17,9 +17,14 @@ const getSingleRecipe = asyncHandler(async (req, res) => {
     }
 
     const isLiked = recipe.likes.includes(req.user?._id)
+    let isSaved = false
+
+    // if user logged in check if recipe is saved
+    const user = await User.findById(req.user?._id)
+    if (user) isSaved = user.savedRecipes.includes(recipe._id)
 
     return res.status(200)
-        .json(new ApiResponse(200, { ...recipe._doc, isLiked }, "Recipe fetched successfully"))
+        .json(new ApiResponse(200, { ...recipe._doc, isLiked, isSaved }, "Recipe fetched successfully"))
 
 })
 
@@ -69,8 +74,7 @@ const getUserRecipes = asyncHandler(async (req, res) => {
     // we'll take userId from body instead of req.user because we won't use JWT middleware there since guest user can also get recipes
     let { username } = req.params
     let { page = 1, limit = 10 } = req.query
-    const skip = (page - 1) * limit 
-
+    const skip = (page - 1) * limit
 
     const recipes = await Recipe.find({ "owner.username": username })
         .skip(parseInt(skip))
@@ -82,6 +86,33 @@ const getUserRecipes = asyncHandler(async (req, res) => {
 
     return res.status(200)
         .json(new ApiResponse(200, recipes, "User recipes fetched successfully"))
+
+})
+
+const getSavedRecipes = asyncHandler(async (req, res) => {
+
+    let { page = 1, limit = 10 } = req.query
+    page = parseInt(page)
+    limit = parseInt(limit)
+
+    const skip = (page - 1) * limit
+
+    const user = await User.findById(req.user?._id)
+        .select("savedRecipes")
+        .populate(
+            {
+                path: "savedRecipes",
+            }
+        )
+
+    if (!user) {
+        return res.status(500).json(new ApiError(500, "Failed to get saved recipes"))
+    }
+
+    const paginatedRecipes = user.savedRecipes.slice(skip, skip + limit)
+
+    return res.status(200)
+        .json(new ApiResponse(200, paginatedRecipes, "Saved recipes fetched successfully"))
 
 })
 
@@ -311,6 +342,7 @@ export {
     getAllRecipes,
     getRandomRecipes,
     getUserRecipes,
+    getSavedRecipes,
     addRecipe,
     updateRecipe,
     deleteRecipe,

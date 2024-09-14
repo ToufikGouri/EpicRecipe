@@ -19,6 +19,7 @@ import PrivateRoutes from './components/PrivateRoutes'
 import ChangePassword from './pages/account/ChangePassword'
 import AddRecipe from './pages/account/AddRecipe'
 import MyRecipes from './pages/account/MyRecipes'
+import SavedRecipes from './pages/account/SavedRecipes'
 
 function App() {
 
@@ -52,6 +53,7 @@ function App() {
               <Route path='addrecipe' element={<AddRecipe />} />
               <Route path='updaterecipe' element={<AddRecipe isUpdatePage={true} />} />
               <Route path='myrecipes' element={<MyRecipes />} />
+              <Route path='savedrecipes' element={<SavedRecipes />} />
             </Route>
           </Route>
         </Routes>
