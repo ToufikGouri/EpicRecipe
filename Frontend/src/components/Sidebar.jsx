@@ -1,7 +1,36 @@
 import React from 'react'
-import { NavLink } from "react-router-dom"
+import { NavLink, useNavigate } from "react-router-dom"
+import { modal, toast } from '../myTools'
+import axios from 'axios'
+import { useDispatch } from 'react-redux'
+import { setUserdata, setUserLog } from '../redux/userSlice'
 
 const Sidebar = ({ username, image }) => {
+
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  const handleLogout = () => {
+
+    modal("Logout From EpicRecipes?", "Logout", "Cancel", "red")
+      .then((val) => {
+        if (val.isConfirmed) {
+          ; (async () => {
+            await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/v1/users/logout`, {}, { withCredentials: true })
+            navigate("/")
+            dispatch(setUserdata(null))
+            dispatch(setUserLog(false))
+          })()
+        }
+      })
+      .catch((error) =>
+        toast.fire({
+          icon: "error",
+          title: `${error.response?.data?.message || "Failed To Logout"}`
+        })
+      )
+  }
+
   return (
     <>
       <main className='sidebar h-[425px] stickys top-16 col-span-1 bg-white shadow-xl'>
@@ -18,7 +47,7 @@ const Sidebar = ({ username, image }) => {
           <li><NavLink to={"/account/addrecipe"}>Add Recipe</NavLink></li>
           <li><NavLink to={"/account/myrecipes"}>My Recipes</NavLink></li>
           <li><NavLink to={"/account/savedrecipes"}>Saved Recipes</NavLink></li>
-          <li><button className='w-full text-start py-[10px] p-5 text-white bg-primaryRed hover:bg-secondaryRed'>Log out</button></li>
+          <li><button onClick={handleLogout} className='w-full text-start py-[10px] p-5 text-white bg-primaryRed hover:bg-secondaryRed'>Log out</button></li>
         </ul>
 
       </main>
