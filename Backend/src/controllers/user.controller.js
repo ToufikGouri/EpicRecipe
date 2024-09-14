@@ -144,7 +144,7 @@ const getUser = asyncHandler(async (req, res) => {
 
 const updateUser = asyncHandler(async (req, res) => {
 
-    const { username, email, oldPass, newPass, defaultImage } = req.body
+    const { username, email, password, defaultImage } = req.body
 
     const user = await User.findById(req.user._id)
 
@@ -166,15 +166,8 @@ const updateUser = asyncHandler(async (req, res) => {
         user.email = email
     }
 
-    // if user wants to change password
-    if (oldPass && newPass) {
-        const isPasswordValid = await user.isPasswordCorrect(oldPass)
-
-        if (!isPasswordValid) {
-            return res.status(401).json(new ApiError(401, "Invalid old password"))
-        }
-        user.password = newPass
-    }
+    // we have handled password using email otp, so will directly save password now
+    if (password) user.password = password
 
     // if user wants to update profile image 
     // if user choose from default images
