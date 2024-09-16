@@ -28,7 +28,7 @@ const About = () => {
 
   return (
     <>
-      <main>
+      <section>
 
         {/* Hero section */}
         <section>
@@ -78,7 +78,7 @@ const About = () => {
         {/* Footer section */}
         <Footer />
 
-      </main>
+      </section>
     </>
   )
 }

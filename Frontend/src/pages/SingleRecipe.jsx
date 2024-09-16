@@ -104,7 +104,7 @@ const SingleRecipe = () => {
 
     return (
         <>
-            <main id='singleRecipe' className='md:w-3/5 m-auto'>
+            <section id='singleRecipe' className='md:w-3/5 m-auto'>
                 <div className="pt-[63px]"></div>
 
                 {/* Hero section */}
@@ -177,7 +177,7 @@ const SingleRecipe = () => {
                     </div>
                 </section>
 
-            </main>
+            </section>
 
             {/* Footer section */}
             <Footer />

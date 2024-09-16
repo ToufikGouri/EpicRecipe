@@ -33,7 +33,7 @@ const Sidebar = ({ username, image }) => {
 
   return (
     <>
-      <main className='sidebar h-[425px] stickys top-16 col-span-1 bg-white shadow-xl'>
+      <aside className='sidebar h-[425px] stickys top-16 col-span-1 bg-white shadow-xl'>
 
         {/* User data */}
         <div className='m-6 flex justify-center items-center font-bold text-xl'>
@@ -50,7 +50,7 @@ const Sidebar = ({ username, image }) => {
           <li><button onClick={handleLogout} className='w-full text-start py-[10px] p-5 text-white bg-primaryRed hover:bg-secondaryRed'>Log out</button></li>
         </ul>
 
-      </main>
+      </aside>
     </>
   )
 }

@@ -80,7 +80,7 @@ const Signup = () => {
 
     return (
         <>
-            <main>
+            <section>
 
                 <section className='md:w-3/5 h-screen m-auto space-y-8 flex flex-col justify-center items-center'>
                     {/* Logo */}
@@ -108,7 +108,7 @@ const Signup = () => {
 
                 </section>
 
-            </main>
+            </section>
         </>
     )
 }

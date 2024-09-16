@@ -72,7 +72,7 @@ const Login = () => {
 
     return (
         <>
-            <main>
+            <section>
 
                 <section className='md:w-3/5 h-screen m-auto space-y-8 flex flex-col justify-center items-center'>
                     {/* Logo */}
@@ -99,7 +99,7 @@ const Login = () => {
 
                 </section>
 
-            </main>
+            </section>
         </>
     )
 }

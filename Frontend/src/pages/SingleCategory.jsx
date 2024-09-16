@@ -41,7 +41,7 @@ const SingleCategory = () => {
 
     return (
         <>
-            <main>
+            <section>
 
                 {/* Hero section */}
                 <section>
@@ -82,7 +82,7 @@ const SingleCategory = () => {
                 {/* Footer section */}
                 <Footer />
 
-            </main>
+            </section>
         </>
     )
 }

@@ -17,7 +17,7 @@ const Category = () => {
 
     return (
         <>
-            <main>
+            <section>
 
                 {/* Hero section */}
                 <section>
@@ -47,7 +47,7 @@ const Category = () => {
                 {/* Footer section */}
                 <Footer />
 
-            </main>
+            </section>
         </>
     )
 }

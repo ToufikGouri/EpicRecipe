@@ -38,7 +38,7 @@ const Recipes = () => {
 
     return (
         <>
-            <main>
+            <section>
 
                 {/* Hero section */}
                 <section>
@@ -90,7 +90,7 @@ const Recipes = () => {
                 {/* Footer section */}
                 <Footer />
 
-            </main>
+            </section>
         </>
     )
 }
