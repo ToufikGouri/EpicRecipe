@@ -116,6 +116,27 @@ const getSavedRecipes = asyncHandler(async (req, res) => {
 
 })
 
+const getSearchRecipes = asyncHandler(async (req, res) => {
+
+    const { key } = req.query
+
+    const result = await Recipe.find({
+        $or: [
+            { title: { $regex: key, $options: 'i' } },
+            { category: { $regex: key, $options: 'i' } },
+        ]
+    })
+        .limit(10)
+
+    if (result.length === 0) {
+        return res.status(404).json(new ApiError(404, "No search results"))
+    }
+
+    return res.status(200)
+        .json(new ApiResponse(200, result, `Searched for ${key} successfully`))
+
+})
+
 const addRecipe = asyncHandler(async (req, res) => {
 
     let { title, description, ingredients, directions, preparationTime, servings, category } = req.body
@@ -343,6 +364,7 @@ export {
     getRandomRecipes,
     getUserRecipes,
     getSavedRecipes,
+    getSearchRecipes,
     addRecipe,
     updateRecipe,
     deleteRecipe,

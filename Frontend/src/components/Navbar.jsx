@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import ER_Logo from "../assets/ER_Logo.svg"
 import { Link, NavLink } from 'react-router-dom'
-import { Search as SearchIcon, UserCircle2 as UserIcon, Menu as MenuIcon, X as CloseIcon } from "lucide-react"
+import { UserCircle2 as UserIcon, Menu as MenuIcon, X as CloseIcon } from "lucide-react"
 import { useSelector } from 'react-redux'
+import Search from './Search'
 
 const Navbar = () => {
 
@@ -26,12 +27,7 @@ const Navbar = () => {
         </ul>
 
         {/* SearchBar */}
-        <div className='flex relative group'>
-          <input type="text" placeholder="Search recipes..."
-            className='w-48 md:w-72 rounded-2xl py-1 ps-2 pe-8 border-2 border-primaryGrey outline-none bg-white hover:bg-gray-100'
-          />
-          <SearchIcon className='absolute top-2/4 -translate-y-2/4 right-2' />
-        </div>
+        <Search />
 
         <Link to="/account" className='max-md:hidden'>
           {user ? <img src={user.image} alt={user.username} className="size-7 rounded-full object-contain border border-primaryGrey" /> : <UserIcon className='size-7 hover:text-primaryRed' />}
