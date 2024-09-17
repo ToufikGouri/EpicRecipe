@@ -72,6 +72,7 @@ const userSlice = createSlice({
                 state.userData = action.payload
                 state.isLoggedIn = true
                 state.loading = false
+                localStorage.setItem("isLoggedIn", true)    // for protected route check, bcoz state will empty on reload but this will help
             })
             .addCase(getUserData.rejected, (state) => {
                 state.loading = false

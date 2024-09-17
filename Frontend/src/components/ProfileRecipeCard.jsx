@@ -15,7 +15,7 @@ const ProfileRecipeCard = ({ recipeData, savedCard = false }) => {
 
     const handleUpdateRecipe = async () => {
         dispatch(setRecipeToUpdate(recipeData))
-        navigate("/account/updaterecipe")
+        navigate("/account/updaterecipe", { state: { isUpdatePage: true } })
     }
 
     const handleDeleteRecipe = () => {

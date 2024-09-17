@@ -52,22 +52,26 @@ const SavedRecipes = () => {
                 </div>
 
                 {/* Pagination */}
-                <h1 className={`my-8 text-primaryBlue text-xl sm:text-2xl font-bold flex justify-center ${savedRecipes?.length < limit ? "block" : "hidden"}`}>
-                    End Of Recipes <button onClick={() => handlePagination(1)} className="ms-2 text-base rounded-full px-4 text-white bg-primaryRed hover:bg-secondaryRed">Back to first page</button>
-                </h1>
-                <div className='flex justify-center space-x-2'>
-                    <button onClick={() => handlePagination(1)} className={`size-8 grid place-items-center rounded-full ${page === 1 ? "bg-primaryBlue hover:bg-primaryBlue/80" : "bg-primaryRed hover:bg-secondaryRed"} text-white`}>1</button>
-                    <p className={`size-8 grid place-items-center rounded-full bg-primaryRed text-white ${page <= 3 ? "hidden" : ""}`}>...</p>
+                {user?.savedRecipes.length > 0 &&
+                    <>
+                        <h1 className={`my-8 text-primaryBlue text-xl sm:text-2xl font-bold flex justify-center ${savedRecipes?.length < limit ? "block" : "hidden"}`}>
+                            End Of Recipes <button onClick={() => handlePagination(1)} className="ms-2 text-base rounded-full px-4 text-white bg-primaryRed hover:bg-secondaryRed">Back to first page</button>
+                        </h1>
+                        <div className='flex justify-center space-x-2'>
+                            <button onClick={() => handlePagination(1)} className={`size-8 grid place-items-center rounded-full ${page === 1 ? "bg-primaryBlue hover:bg-primaryBlue/80" : "bg-primaryRed hover:bg-secondaryRed"} text-white`}>1</button>
+                            <p className={`size-8 grid place-items-center rounded-full bg-primaryRed text-white ${page <= 3 ? "hidden" : ""}`}>...</p>
 
-                    {paginationArray.map((val) =>
-                        <button key={val} onClick={() => handlePagination(val)} className={`size-8 grid place-items-center rounded-full ${page === val ? "bg-primaryBlue hover:bg-primaryBlue/80" : "bg-primaryRed hover:bg-secondaryRed"} text-white`}>
-                            {val}
-                        </button>
-                    )}
+                            {paginationArray.map((val) =>
+                                <button key={val} onClick={() => handlePagination(val)} className={`size-8 grid place-items-center rounded-full ${page === val ? "bg-primaryBlue hover:bg-primaryBlue/80" : "bg-primaryRed hover:bg-secondaryRed"} text-white`}>
+                                    {val}
+                                </button>
+                            )}
 
-                    <p className={`size-8 grid place-items-center rounded-full bg-primaryRed text-white`}>...</p>
-                    <button onClick={() => handlePagination(page + 1)} className={`size-8 grid place-items-center rounded-full bg-primaryRed hover:bg-secondaryRed text-white w-16`}>Next</button>
-                </div>
+                            <p className={`size-8 grid place-items-center rounded-full bg-primaryRed text-white`}>...</p>
+                            <button onClick={() => handlePagination(page + 1)} className={`size-8 grid place-items-center rounded-full bg-primaryRed hover:bg-secondaryRed text-white w-16`}>Next</button>
+                        </div>
+                    </>
+                }
 
             </section>
         </>

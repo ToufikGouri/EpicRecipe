@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import './App.css'
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 import { getDefaultProfiles, getUserData } from './redux/userSlice'
 import Navbar from "./components/Navbar"
@@ -47,11 +47,11 @@ function App() {
           <Route path='*' element={<NotFound />} />
           <Route element={<PrivateRoutes />}>
             <Route path='/account' element={<Account />}>
-              <Route index element={<Profile />} /> {/* Index is used to specify default child sub route but path need to be specified explicitely */}
+              <Route index element={<Navigate to={"/account/profile"} />} /> {/* Index is used to specify default child sub route but path need to be specified explicitely */}
               <Route path='profile' element={<Profile />} />
               <Route path='changepassword' element={<ChangePassword />} />
               <Route path='addrecipe' element={<AddRecipe />} />
-              <Route path='updaterecipe' element={<AddRecipe isUpdatePage={true} />} />
+              <Route path='updaterecipe' element={<AddRecipe />} />
               <Route path='myrecipes' element={<MyRecipes />} />
               <Route path='savedrecipes' element={<SavedRecipes />} />
             </Route>

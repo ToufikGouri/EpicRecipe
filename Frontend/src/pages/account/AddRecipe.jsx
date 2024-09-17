@@ -4,12 +4,14 @@ import { Loading, modal, toast } from '../../myTools'
 import { PlusIcon, XCircleIcon } from 'lucide-react'
 import axios from 'axios'
 import { useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
-const AddRecipe = ({ isUpdatePage = false }) => {
+const AddRecipe = () => {
 
     const recipeToUpdate = useSelector(state => state.user.recipeToUpdate)
     const navigate = useNavigate()
+    const location = useLocation()
+    const isUpdatePage = location.state?.isUpdatePage || false
 
     const [title, setTitle] = useState("")
     const [desc, setDesc] = useState("")
@@ -133,6 +135,11 @@ const AddRecipe = ({ isUpdatePage = false }) => {
     }
 
     useEffect(() => {
+
+        if (location.pathname == "/account/updaterecipe" && !recipeToUpdate) {
+            navigate("/account/addrecipe")
+            return
+        }
 
         if (isUpdatePage) {
             setTitle(recipeToUpdate.title)

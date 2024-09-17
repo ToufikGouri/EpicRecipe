@@ -110,6 +110,7 @@ footer a:hover {
     color: #F4796C;
 }
 
+/* Sidebar */
 .sidebar ul li {
     display: flex;
     border-top: 2px solid #D4D4D4;
@@ -118,4 +119,28 @@ footer a:hover {
 .sidebar ul li a {
     width: 100%;
     padding: 10px 20px;
+    border-left: 4px solid transparent;
+}
+
+/* Sidebar full screen */
+.sidebar-fs .active {
+    color: #004d84;
+    font-weight: bold;
+    border-left: 4px solid #004d84;
+}
+
+/* Sidebar small screen */
+.sidebar-ss li {
+    border: none !important;
+}
+
+.sidebar-ss li a {
+    border-left: none !important;
+    border-bottom: 4px solid transparent;
+}
+
+.sidebar-ss .active {
+    color: #004d84;
+    font-weight: bold;
+    border-bottom: 4px solid #004d84;
 }
