@@ -31,7 +31,7 @@
 -   **Database**: MongoDB with Mongoose for flexible, scalable data storage.
 -   **Authentication**: JWT (JSON Web Tokens) for secure user authentication.
 -   **Media Storage**: Cloudinary for efficient image management and storage.
--   **Deployment**: Frontend hosted on [Netlify](https://www.netlify.com/), backend on [Heroku](https://www.heroku.com/) (or your chosen platforms).
+-   **Deployment**: Frontend & Backend both hosted on [Vercel](https://vercel.com/).
 
 
 ## 🤝 Contributing
