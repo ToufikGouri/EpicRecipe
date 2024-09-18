@@ -1,4 +1,4 @@
-import { OTP, User } from "../models/User.model.js";
+import { OTP, User } from "../models/user.model.js";
 import { ApiResponse } from "../utils/ApiResponse.js"
 import { ApiError } from "../utils/ApiError.js"
 import { cookieOptions } from "../utils/myTools.js"
