@@ -4,8 +4,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getAllRecipes, getTopRecipes } from '../redux/recipeSlice'
 import RecipeCard from '../components/RecipeCard'
 import Footer from '../components/Footer'
+import useTitle from '../components/useTitle'
 
 const Recipes = () => {
+
+    useTitle("Recipes")
 
     const topRecipesData = useSelector(state => state.recipe.topRecipes)
     const allRecipesData = useSelector(state => state.recipe.allRecipes)

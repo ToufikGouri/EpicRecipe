@@ -5,9 +5,11 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { Loading, modal, toast } from "../../myTools"
 import { getUserData } from '../../redux/userSlice'
+import useTitle from '../../components/useTitle'
 
 const Profile = () => {
 
+  useTitle("Personal Info")
   const user = useSelector(state => state.user.userData)
   const defaultProfiles = useSelector(state => state.user.defaultProfiles)
   const dispatch = useDispatch()

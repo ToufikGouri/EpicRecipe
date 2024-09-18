@@ -5,9 +5,11 @@ import { getAllCategories } from '../redux/recipeSlice'
 import RecipeCard from '../components/RecipeCard'
 import Footer from '../components/Footer'
 import CategoryCard from '../components/CategoryCard'
+import useTitle from '../components/useTitle'
 
 const Category = () => {
 
+    useTitle("Category")
     const allCategoriesData = useSelector(state => state.recipe.allCategories)
     const dispatch = useDispatch()
 

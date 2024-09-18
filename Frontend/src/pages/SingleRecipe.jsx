@@ -8,6 +8,7 @@ import RecipeCard from '../components/RecipeCard'
 import Footer from '../components/Footer'
 import { modal, toast } from "../myTools"
 import { useSelector } from 'react-redux'
+import useTitle from '../components/useTitle'
 
 const SingleRecipe = () => {
 
@@ -15,6 +16,7 @@ const SingleRecipe = () => {
     const [recipe, setRecipe] = useState(null)
     const [randomRecipes, setRandomRecipes] = useState(null)
     const num = 6   // number of random recipes to get
+    useTitle(recipe?.title || "Recipes")
 
     const isLoggedIn = useSelector(state => state.user.isLoggedIn)
     const navigate = useNavigate()

@@ -5,9 +5,11 @@ import { PlusIcon, XCircleIcon } from 'lucide-react'
 import axios from 'axios'
 import { useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
+import useTitle from '../../components/useTitle'
 
 const AddRecipe = () => {
 
+    useTitle("Add Recipe")
     const recipeToUpdate = useSelector(state => state.user.recipeToUpdate)
     const navigate = useNavigate()
     const location = useLocation()

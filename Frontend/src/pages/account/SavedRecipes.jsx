@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getSavedRecipes, setReloadPage } from '../../redux/userSlice'
 import ProfileRecipeCard from '../../components/ProfileRecipeCard'
+import useTitle from '../../components/useTitle'
 
 const SavedRecipes = () => {
 
+    useTitle("Saved Recipes")
     const user = useSelector(state => state.user.userData)
     const savedRecipes = useSelector(state => state.user.savedRecipes)
     const reloadPage = useSelector(state => state.user.reloadPage)

@@ -36,14 +36,14 @@ export const getAllCategories = createAsyncThunk(
     "recipes/getAllCategories",
     async () => {
         return await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/recipesby/categories`, { withCredentials: true })
-            .then((val) => val.data.data).catch(err => console.log(err))
+            .then((val) => val.data.data)
     }
 )
 export const getRecipesByCategory = createAsyncThunk(
     "recipes/getRecipesByCategory",
     async ({ category, page = 1, limit = 8 }) => {
         return await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/recipesby/category?category=${category}&page=${page}&limit=${limit}`, { withCredentials: true })
-            .then((val) => val.data.data).catch(err => console.log(err))
+            .then((val) => val.data.data)
     }
 )
 

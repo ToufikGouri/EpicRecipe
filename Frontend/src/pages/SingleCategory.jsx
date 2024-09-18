@@ -5,12 +5,15 @@ import { getRecipesByCategory } from '../redux/recipeSlice'
 import RecipeCard from '../components/RecipeCard'
 import Footer from '../components/Footer'
 import { useParams } from 'react-router-dom'
+import useTitle from '../components/useTitle'
 
 const SingleCategory = () => {
 
     const tempCategory = useParams().category
 
     const category = tempCategory.split("-").join(" ")
+
+    useTitle(category[0].toUpperCase() + category.slice(1))
 
     const recipesByCategoryData = useSelector(state => state.recipe.recipesByCategory)
     const dispatch = useDispatch()

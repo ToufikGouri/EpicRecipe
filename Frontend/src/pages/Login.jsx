@@ -6,9 +6,12 @@ import { useDispatch } from "react-redux"
 import SweetAlert from "sweetalert2"
 import axios from "axios"
 import { setUserLog } from '../redux/userSlice'
+import useTitle from '../components/useTitle'
 
 const Login = () => {
 
+    useTitle("Login")
+    
     const toast = SweetAlert.mixin({
         toast: true,
         position: "top",

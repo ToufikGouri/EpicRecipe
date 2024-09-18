@@ -3,9 +3,11 @@ import { useSelector } from "react-redux"
 import { Loading, sendOTPemail, toast } from '../../myTools'
 import axios from 'axios'
 import { LockKeyholeIcon } from 'lucide-react'
+import useTitle from '../../components/useTitle'
 
 const ChangePassword = () => {
 
+    useTitle("Change Password")
     const user = useSelector(state => state.user.userData)
     const [inputOTP, setInputOTP] = useState("")
     const [isOTPsent, setIsOTPsent] = useState(false)
@@ -86,8 +88,6 @@ const ChangePassword = () => {
                 icon: "error",
                 title: `${error.response?.data?.message || "Failed To Update Password"}`
             })
-            console.log(error);
-
         }
     }
 

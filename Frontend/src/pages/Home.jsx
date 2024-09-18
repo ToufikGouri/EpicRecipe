@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import HeroImage from "../assets/HomeAssets/HeroImage.png"
+import React, { useEffect } from 'react'
+import HeroImage from "../assets/HomeAssets/HeroImage.avif"
 import MidImage from "../assets/HomeAssets/MidImage.png"
 import { ChevronRightIcon, HeartIcon } from "lucide-react"
 import RecipeCard from '../components/RecipeCard'
@@ -9,17 +9,18 @@ import TrendingSection from '../components/homeComponents/TrendingSection'
 import { Link } from 'react-router-dom'
 import TestimonialSection from '../components/homeComponents/TestimonialSection'
 import Footer from '../components/Footer'
+import useTitle from '../components/useTitle'
 
 const Home = () => {
 
+  useTitle("Home")
   const trendingRecipesData = useSelector(state => state.recipe.trendingRecipes)
   const homeRecipesData = useSelector(state => state.recipe.homeRecipes)
   const dispatch = useDispatch()
 
   const heroRecipeData = {
-    title: "Title of recipe",
+    _id: "66d5a09d2e5eb2c5d2b76b81",
     image: HeroImage,
-    // image: "https://www.recipetineats.com/tachyon/2022/11/Honey-Soy-Wings_6.jpg?resize=900%2C1260&zoom=1",
   }
 
   useEffect(() => {
@@ -31,11 +32,11 @@ const Home = () => {
   return (
     <>
       <main>
-        
+
         {/* Hero section*/}
         <section className={`h-screen w-full bg-no-repeat bg-cover bg-center text-white flex flex-col justify-end items-start p-2 sm:p-8 gap-10`} style={{ backgroundImage: `url(${heroRecipeData.image})` }}>
           <h1 className='text-6xl sm:text-7xl font-bold textShadow bg-black/10'>Quick recipes to <br /> get started with</h1>
-          <Link to={`/recipes/recipe/${heroRecipeData.title}`} className='primaryBtn'>MAKE IT! <ChevronRightIcon /> </Link>
+          <Link to={`/recipes/${heroRecipeData._id}`} className='primaryBtn'>MAKE IT! <ChevronRightIcon /> </Link>
         </section>
 
         {/* Trending section */}

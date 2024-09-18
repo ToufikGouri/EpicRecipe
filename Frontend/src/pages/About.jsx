@@ -5,9 +5,12 @@ import AwardImage1 from "../assets/AboutAssets/Award img 1.png"
 import AwardImage2 from "../assets/AboutAssets/Award img 2.png"
 import AwardImage3 from "../assets/AboutAssets/Award img 3.png"
 import Footer from '../components/Footer'
+import useTitle from '../components/useTitle'
 
 const About = () => {
 
+  useTitle("About")
+  
   const awardsData = [
     {
       title: "Best Recipes",
