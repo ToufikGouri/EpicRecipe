@@ -64,7 +64,7 @@ const Sidebar = () => {
           <li><NavLink to={"/account/addrecipe"}><CirclePlusIcon /></NavLink></li>
           <li><NavLink to={"/account/myrecipes"}><BookHeartIcon /></NavLink></li>
           <li><NavLink to={"/account/savedrecipes"}><BookmarkIcon /></NavLink></li>
-          <li><button onClick={handleLogout} className='w-full text-start py-[10px] p-5 text-white bg-primaryRed hover:bg-secondaryRed'><LogOutIcon /></button></li>
+          <li><button onClick={handleLogout} className='w-full flex justify-center items-center text-start text-white bg-primaryRed hover:bg-secondaryRed'><LogOutIcon /></button></li>
         </ul>
 
       </aside>

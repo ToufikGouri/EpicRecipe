@@ -132,11 +132,15 @@ footer a:hover {
 /* Sidebar small screen */
 .sidebar-ss li {
     border: none !important;
+    width: 100%;
 }
 
 .sidebar-ss li a {
+    padding: 10px 0px !important;
     border-left: none !important;
     border-bottom: 4px solid transparent;
+    display: flex;
+    justify-content: center;
 }
 
 .sidebar-ss .active {
